@@ -10,7 +10,6 @@
     .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
     
     .media-container { width: 100%; height: 210px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #000; position: relative; }
-    /* YouTube penceresini tam sığdırmak ve dokunmayı engellemek için */
     .media-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
 
     h1 { margin-top: 0; color: #4facfe; font-size: 22px; margin-bottom: 15px; }
@@ -34,7 +33,7 @@
   <h1>ANTRENMAN KOÇU</h1>
   
   <div class="media-container" id="media-container">
-    <iframe id="exercise-media" src="" allow="autoplay; fullscreen"></iframe>
+    <iframe id="exercise-media" src="" allow="autoplay; fullscreen; encrypted-media"></iframe>
   </div>
 
   <div class="status" id="status-text">HAZIR</div>
@@ -56,15 +55,12 @@
 </div>
 
 <script>
-  // Döngünün (loop) YouTube'da çalışması için "playlist" parametresine aynı video ID'sini tekrar yazman gerekir.
-  // Örnek: embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0
-  
   const workout = [
     { 
       name: "1. Pike Push-Up", 
       type: "reps", 
       sets: 3, 
-      detail: "Hedef: 8-12 Tekrar", 
+      detail: "Omuzları hizala, başı yere yaklaştır.", 
       setRest: 90, 
       exRest: 120, 
       media: "https://www.youtube.com/embed/sp4JEAzt3Q8?autoplay=1&mute=1&loop=1&playlist=sp4JEAzt3Q8&controls=0&modestbranding=1" 
@@ -73,7 +69,7 @@
       name: "2. Standart Şınav", 
       type: "reps", 
       sets: 4, 
-      detail: "Hedef: Tükenişe Kadar", 
+      detail: "Gövde düz, dirsekleri geriye bük.", 
       setRest: 90, 
       exRest: 120, 
       media: "https://www.youtube.com/embed/IODxDxX7oi4?autoplay=1&mute=1&loop=1&playlist=IODxDxX7oi4&controls=0&modestbranding=1" 
@@ -82,7 +78,7 @@
       name: "3. Prone Y-T-W", 
       type: "reps", 
       sets: 3, 
-      detail: "Hedef: Her Harf 10 Tekrar", 
+      detail: "Yüzüstü uzan; kolları Y, T ve W yap.", 
       setRest: 90, 
       exRest: 120, 
       media: "https://www.youtube.com/embed/jZ_E5M1y4aE?autoplay=1&mute=1&loop=1&playlist=jZ_E5M1y4aE&controls=0&modestbranding=1" 
@@ -91,20 +87,20 @@
       name: "4. Tempolu Squat", 
       type: "reps", 
       sets: 4, 
-      detail: "Hedef: 15-20 Tekrar (3sn İniş)", 
+      detail: "3s yavaş in, patlayıcı kalk.", 
       setRest: 90, 
       exRest: 120, 
-      media: "https://www.youtube.com/embed/gs03sUerYnE?autoplay=1&mute=1&loop=1&playlist=gs03sUerYnE&controls=0&modestbranding=1" 
+      media: "https://www.youtube.com/embed/U3HlEF_E9fo?autoplay=1&mute=1&loop=1&playlist=U3HlEF_E9fo&controls=0&modestbranding=1" 
     },
     { 
       name: "5. Plank", 
       type: "time", 
       duration: 60, 
       sets: 3, 
-      detail: "Hedef: 60 Saniye Statik", 
+      detail: "Dirsekler üstünde düz çizgi bekle.", 
       setRest: 60, 
       exRest: 0, 
-      media: "https://www.youtube.com/embed/ASdvN_XEl_c?autoplay=1&mute=1&loop=1&playlist=ASdvN_XEl_c&controls=0&modestbranding=1" 
+      media: "https://www.youtube.com/embed/pSHjTRCQxIw?autoplay=1&mute=1&loop=1&playlist=pSHjTRCQxIw&controls=0&modestbranding=1" 
     }
   ];
 
@@ -159,7 +155,7 @@
       statusText.innerText = "TEBRİKLER!";
       statusText.style.color = "#00f2fe";
       exName.innerText = "Antrenman Bitti";
-      exDetail.innerText = "Şimdi beslenme zamanı!";
+      exDetail.innerText = "Güzel iş çıkardın!";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
@@ -181,7 +177,7 @@
         ring.setAttribute("stroke", "#ff4757");
         let nextEx = workout[currentIndex + 1];
         exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Bitiş");
-        exDetail.innerText = "Kaslarını gevşet, 2 dakika dinlen.";
+        exDetail.innerText = "2 dakika dinlen, odağını topla.";
       } else {
         statusText.innerText = "SET ARASI DİNLENME";
         statusText.style.color = "#ffa502";
@@ -190,9 +186,7 @@
         exDetail.innerText = (currentSet + 1) + ". Set için nefeslen (90s).";
       }
       btn.innerText = "DİNLENMEYİ GEÇ";
-      
-      // Dinlenme süresince videonun arkada oynamaması ve ses yapmaması için kaynağı boşalt
-      exerciseMedia.src = "";
+      exerciseMedia.src = ""; // Videoyu durdur
     } else {
       mediaContainer.style.display = "block";
       
@@ -248,20 +242,54 @@
       if (currentIndex === workout.length - 1 && currentSet >= current.sets) {
         currentIndex++;
         isResting = false;
-HTML tabanlı temel web iskeleti üzerinden ilerliyoruz. Başlangıç için standart bir HTML5 şablonunu aşağıda bulabilirsin:
+        updateUI();
+        return;
+      }
 
-```html
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Projesi</title>
-</head>
-<body>
+      let restTime = (currentSet >= current.sets) ? current.exRest : current.setRest;
+      updateUI();
+      startTimer(restTime);
+    } else {
+      isResting = false;
+      if (currentSet >= workout[currentIndex].sets) {
+        currentSet = 1;
+        currentIndex++;
+      } else {
+        currentSet++;
+      }
+      updateUI();
+    }
+  }
 
-    <!-- İçerik buraya gelecek -->
+  function startTimer(seconds) {
+    clearInterval(timerInterval);
+    totalSeconds = seconds;
+    secondsLeft = seconds;
+    formatTimeToDisplay(secondsLeft);
+    setRingProgress(100);
+
+    timerInterval = setInterval(() => {
+      secondsLeft--;
+      formatTimeToDisplay(secondsLeft);
+      
+      let percent = (secondsLeft / totalSeconds) * 100;
+      setRingProgress(percent);
+
+      if (secondsLeft <= 0) {
+        clearInterval(timerInterval);
+        nextStep();
+      }
+    }, 1000);
+  }
+
+  function formatTimeToDisplay(sec) {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    document.getElementById("timer").innerText = `${m}:${s}`;
+  }
+
+  updateUI();
+</script>
 
 </body>
 </html>
-
