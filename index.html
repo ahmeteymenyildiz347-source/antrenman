@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Body Pro & Fok Koç</title>
+  <title>Full Body Cyber Pro & Fok Koç</title>
   <style>
     :root {
       --primary: #00f2fe;
       --secondary: #4facfe;
       --accent: #ff4757;
-      --bg: #0a0a0c;
-      --card-bg: rgba(22, 24, 30, 0.95);
+      --success: #2ed573;
+      --warning: #ffa502;
+      --bg: #060709;
+      --card-bg: rgba(18, 20, 28, 0.92);
+      --glass-border: rgba(0, 242, 254, 0.15);
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { 
       background: var(--bg); 
-      background-image: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08), transparent 70%);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.12), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(255, 71, 87, 0.08), transparent 50%);
       color: #fff; 
       display: flex; 
       justify-content: center; 
@@ -28,121 +33,126 @@
 
     .card { 
       background: var(--card-bg); 
-      border-radius: 24px; 
-      padding: 28px 24px; 
+      border-radius: 28px; 
+      padding: 24px 20px; 
       width: 100%; 
-      max-width: 420px; 
+      max-width: 440px; 
       text-align: center; 
-      box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 20px rgba(0, 242, 254, 0.1); 
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 30px rgba(0, 242, 254, 0.15); 
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
       position: relative;
       z-index: 2;
     }
     
+    /* Üst Araç Çubuğu (Ses, Geçmiş, Streak) */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .icon-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+    .icon-btn:hover { background: rgba(0, 242, 254, 0.2); color: var(--primary); }
+    .streak-badge { font-size: 12px; font-weight: 900; color: var(--warning); background: rgba(255, 165, 2, 0.15); padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(255, 165, 2, 0.3); }
+
+    /* Takvim / Günler */
+    .week-tracker { display: flex; justify-content: space-between; margin-bottom: 18px; background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
+    .day-dot { font-size: 10px; font-weight: 800; color: #555; text-align: center; }
+    .day-dot.active { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+    .day-dot.done { color: var(--success); }
+    .day-circle { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; margin: 4px auto 0 auto; font-size: 10px; border: 1px solid transparent; }
+    .day-dot.done .day-circle { background: var(--success); color: #000; font-weight: 900; }
+    .day-dot.active .day-circle { border-color: var(--primary); }
+
     h1 { 
-      margin-top: 0; 
+      margin: 0 0 2px 0; 
       background: linear-gradient(135deg, var(--secondary), var(--primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 26px; 
-      margin-bottom: 4px; 
       font-weight: 900; 
       letter-spacing: -0.5px;
     }
-    .subtitle { font-size: 12px; color: #666; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .subtitle { font-size: 11px; color: #666; margin-bottom: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
     
-    .status { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 800; color: #888; }
-    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.12); color: var(--primary); padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 800; margin-bottom: 15px; border: 1px solid rgba(0, 242, 254, 0.25); }
-    .exercise-name { font-size: 22px; font-weight: 800; margin-bottom: 12px; color: #fff; letter-spacing: -0.5px; }
+    .status { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 900; color: #888; }
+    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.12); color: var(--primary); padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 12px; border: 1px solid rgba(0, 242, 254, 0.25); }
+    .exercise-name { font-size: 20px; font-weight: 800; margin-bottom: 10px; color: #fff; letter-spacing: -0.5px; min-height: 28px; }
     
     /* Detay Kartı */
-    .info-box { background: rgba(255,255,255,0.03); border-radius: 14px; padding: 14px; margin-bottom: 18px; text-align: left; border: 1px solid rgba(255,255,255,0.06); }
-    .info-target { font-size: 12px; font-weight: 800; color: var(--primary); margin-bottom: 4px; text-transform: uppercase; }
-    .info-detail { font-size: 13px; color: #bbb; line-height: 1.4; margin-bottom: 8px; }
-    .info-reps { font-size: 13px; font-weight: 700; color: #2ed573; background: rgba(46, 213, 115, 0.1); padding: 4px 8px; border-radius: 6px; display: inline-block; }
+    .info-box { background: rgba(255,255,255,0.03); border-radius: 14px; padding: 12px; margin-bottom: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.06); }
+    .info-target { font-size: 11px; font-weight: 800; color: var(--primary); margin-bottom: 3px; text-transform: uppercase; }
+    .info-detail { font-size: 12px; color: #bbb; line-height: 1.4; margin-bottom: 6px; }
+    .info-reps { font-size: 12px; font-weight: 700; color: var(--success); background: rgba(46, 213, 115, 0.12); padding: 3px 8px; border-radius: 6px; display: inline-block; }
 
     /* Rep Input */
-    .rep-tracker { display: none; margin-bottom: 18px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px; }
-    .rep-tracker label { font-size: 13px; color: #aaa; margin-right: 10px; font-weight: 600; }
-    .rep-tracker input { width: 70px; background: #222; border: 1px solid #444; color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 16px; text-align: center; font-weight: bold; }
+    .rep-tracker { display: none; margin-bottom: 15px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    .rep-tracker label { font-size: 12px; color: #aaa; margin-right: 8px; font-weight: 600; }
+    .rep-tracker input { width: 65px; background: #1a1d24; border: 1px solid #333; color: #fff; padding: 5px 8px; border-radius: 8px; font-size: 15px; text-align: center; font-weight: bold; }
 
     /* Dairesel Sayaç */
-    .ring-container { position: relative; width: 140px; height: 140px; margin: 0 auto 20px auto; }
+    .ring-container { position: relative; width: 130px; height: 130px; margin: 0 auto 15px auto; }
     .progress-ring__circle { transition: stroke-dashoffset 1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
-    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; }
+    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 32px; font-weight: 900; color: #fff; letter-spacing: -1px; }
 
-    /* Buton */
+    /* Butonlar */
+    .btn-group { display: flex; gap: 8px; }
     .btn { 
       background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
       color: #000; 
       border: none; 
-      padding: 16px 28px; 
-      font-size: 16px; 
+      padding: 15px; 
+      font-size: 15px; 
       font-weight: 900; 
       border-radius: 14px; 
       cursor: pointer; 
       width: 100%; 
       transition: all 0.2s; 
-      box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3); 
+      box-shadow: 0 8px 20px rgba(0, 242, 254, 0.25); 
     }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; box-shadow: none; border: 1px solid rgba(255,255,255,0.1); width: 45%; }
     .btn:active { transform: scale(0.97); opacity: 0.9; }
-    .progress { margin-top: 15px; font-size: 12px; color: #555; font-weight: 700; text-transform: uppercase; }
+    .progress { margin-top: 12px; font-size: 11px; color: #555; font-weight: 700; text-transform: uppercase; }
 
-    /* --- SAĞDAKİ MOTİVASYON FOK BALIĞI --- */
-    .seal-widget {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      z-index: 99;
-      max-width: 200px;
-      pointer-events: none;
-    }
-    .seal-speech {
-      background: #ffffff;
-      color: #121212;
-      padding: 10px 14px;
-      border-radius: 16px;
-      border-bottom-right-radius: 2px;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      margin-bottom: 8px;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      line-height: 1.3;
-      text-align: right;
-    }
-    .seal-avatar {
-      font-size: 42px;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-      animation: float 3s ease-in-out infinite;
-      cursor: pointer;
-      pointer-events: auto;
-    }
+    /* Modal (Geçmiş Tablosu) */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+    .modal-content { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px; width: 100%; max-width: 380px; max-height: 80vh; overflow-y: auto; text-align: left; }
+    .modal-title { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .history-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 10px; margin-bottom: 8px; font-size: 12px; border-left: 3px solid var(--primary); }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(5deg); }
-    }
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.5) translateY(10px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
+    /* FOK BALIĞI KOÇU */
+    .seal-widget { position: fixed; right: 15px; bottom: 15px; display: flex; flex-direction: column; align-items: flex-end; z-index: 99; max-width: 180px; pointer-events: none; }
+    .seal-speech { background: #ffffff; color: #121212; padding: 9px 12px; border-radius: 14px; border-bottom-right-radius: 2px; font-size: 11px; font-weight: 800; box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 6px; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); line-height: 1.3; text-align: right; }
+    .seal-avatar { font-size: 38px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); animation: float 3s ease-in-out infinite; cursor: pointer; pointer-events: auto; }
+
+    @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-6px) rotate(4deg); } }
+    @keyframes popIn { 0% { opacity: 0; transform: scale(0.5) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
     @media (max-width: 600px) {
-      .seal-widget { right: 10px; bottom: 10px; max-width: 150px; }
-      .seal-speech { font-size: 11px; padding: 8px 10px; }
-      .seal-avatar { font-size: 36px; }
+      .seal-widget { right: 10px; bottom: 10px; max-width: 140px; }
+      .seal-speech { font-size: 10px; padding: 7px 9px; }
+      .seal-avatar { font-size: 32px; }
     }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>FULL BODY PRO</h1>
+  <!-- Üst Araç Çubuğu -->
+  <div class="top-bar">
+    <button class="icon-btn" onclick="openHistoryModal()">📊 GEÇMİŞİM</button>
+    <div class="streak-badge" id="streak-badge">🔥 0 GÜN SERİ</div>
+    <button class="icon-btn" id="sound-btn" onclick="toggleSound()">🔊 SES: AÇIK</button>
+  </div>
+
+  <!-- Haftalık Takvim -->
+  <div class="week-tracker" id="week-tracker">
+    <div class="day-dot"><span id="d-0">PZT</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-1">SAL</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-2">ÇAR</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-3">PER</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-4">CUM</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-5">CBT</span><div class="day-circle">✓</div></div>
+    <div class="day-dot"><span id="d-6">PAZ</span><div class="day-circle">✓</div></div>
+  </div>
+
+  <h1>FULL BODY CYBER PRO</h1>
   <div class="subtitle">1 Aylık Calisthenics Programı</div>
 
   <div class="status" id="status-text">ANTRENMANA HAZIRLAN</div>
@@ -162,14 +172,17 @@
   </div>
 
   <div class="ring-container" id="ring-container">
-    <svg class="progress-ring" width="140" height="140">
-      <circle stroke="#1e2026" stroke-width="8" fill="transparent" r="60" cx="70" cy="70"/>
-      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="60" cx="70" cy="70"/>
+    <svg class="progress-ring" width="130" height="130">
+      <circle stroke="#161820" stroke-width="8" fill="transparent" r="56" cx="65" cy="65"/>
+      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="56" cx="65" cy="65"/>
     </svg>
     <div class="timer-display" id="timer">00:00</div>
   </div>
 
-  <button class="btn" id="action-btn" onclick="nextStep()">ANTRENMANA BAŞLA</button>
+  <div class="btn-group" id="btn-group">
+    <button class="btn btn-secondary" id="warmup-btn" onclick="startWarmup()">🔥 ISINMA (3 DAK)</button>
+    <button class="btn" id="action-btn" onclick="nextStep()">BAŞLA</button>
+  </div>
   <div class="progress" id="progress-text">0 / 5 Egzersiz</div>
 </div>
 
@@ -179,84 +192,39 @@
   <div class="seal-avatar" onclick="triggerSealQuote()">🦭</div>
 </div>
 
+<!-- GEÇMİŞ KULLANICI GEÇMİŞİ MODAL -->
+<div class="modal" id="history-modal">
+  <div class="modal-content">
+    <div class="modal-title">
+      <span>📊 Kaydedilen Tekrarlar</span>
+      <span style="cursor:pointer;" onclick="closeHistoryModal()">✕</span>
+    </div>
+    <div id="history-list">Henüz kaydedilmiş tekrar yok.</div>
+  </div>
+</div>
+
 <script>
-  // Barfiks yerine Y-T-W / Superman eklendi, Tahmini Şınav/Tekrar sayıları güncellendi.
+  let soundEnabled = true;
+
   const workout = [
-    { 
-      name: "1. Pike Push-Up", 
-      type: "reps", 
-      sets: 3, 
-      target: "Omuzlar & Üst Göğüs",
-      detail: "Kalçanı yukarı kaldır 'V' ol. Başını ellerinin biraz önüne indirip omuz gücünle kendini geriye it.", 
-      targetReps: "8 - 12 Tekrar",
-      setRest: 90, 
-      exRest: 120 
-    },
-    { 
-      name: "2. Prone Y-T-W / Superman", 
-      type: "reps", 
-      sets: 3, 
-      target: "Tüm Sırt, Arka Omuz & Duruş Kasları",
-      detail: "Yüzüstü yat. Kolları sırasıyla Y, T ve W yapıp havaya kaldır. Kürek kemiklerini 2 saniye sık.", 
-      targetReps: "12 - 15 Kombinasyon",
-      setRest: 90, 
-      exRest: 120 
-    },
-    { 
-      name: "3. Standart Şınav", 
-      type: "reps", 
-      sets: 4, 
-      target: "Göğüs, Ön Omuz & Triceps (Arka Kol)",
-      detail: "Vücut ok gibi dümdüz. Göğüs yere değene kadar yavaş in, patlayıcı şekilde yukarı kendini it.", 
-      targetReps: "15 - 20 Şınav (Tükeniş)",
-      setRest: 90, 
-      exRest: 120 
-    },
-    { 
-      name: "4. Bulgarian Split Squat", 
-      type: "reps", 
-      sets: 3, 
-      target: "Ön Bacak, Kalça & Arka Bacak",
-      detail: "Bir ayağını arkadaki koltuğa koy. Öndeki bacağın üzerine 90 derece çök. Her bacak için ayrı ayrı yap.", 
-      targetReps: "10 - 12 Tekrar (Her Bacak)",
-      setRest: 90, 
-      exRest: 120 
-    },
-    { 
-      name: "5. Hollow Body Hold (Plank)", 
-      type: "time", 
-      duration: 60, 
-      sets: 3, 
-      target: "Tüm Karın Kasları & Core Bölgesi",
-      detail: "Sırtüstü yat, belini yere yapıştır. Kolları ve bacakları kaldırarak karın kaslarını sıkarak sabit bekle.", 
-      targetReps: "60 Saniye Sabit",
-      setRest: 60, 
-      exRest: 0 
-    }
+    { name: "1. Pike Push-Up", type: "reps", sets: 3, target: "Omuzlar & Üst Göğüs", detail: "Kalçanı yukarı kaldır 'V' ol. Başını ellerinin önüne doğru yavaşça indir ve omuz gücünle geriye it.", targetReps: "8 - 12 Tekrar", setRest: 90, exRest: 120 },
+    { name: "2. Prone Y-T-W / Superman", type: "reps", sets: 3, target: "Tüm Sırt, Arka Omuz & Duruş Kasları", detail: "Yüzüstü yat. Kolları sırasıyla Y, T ve W yapıp havaya kaldır. Kürek kemiklerini 2 saniye sık.", targetReps: "12 - 15 Kombinasyon", setRest: 90, exRest: 120 },
+    { name: "3. Standart Şınav", type: "reps", sets: 4, target: "Göğüs, Ön Omuz & Triceps", detail: "Vücut ok gibi dümdüz. Göğsün yere değene kadar yavaş in, patlayıcı şekilde yukarı kendini it.", targetReps: "15 - 20 Şınav (Tükeniş)", setRest: 90, exRest: 120 },
+    { name: "4. Bulgarian Split Squat", type: "reps", sets: 3, target: "Ön Bacak, Kalça & Arka Bacak", detail: "Bir ayağını arkadaki koltuğa koy. Öndeki bacağın üzerine 90 derece çök. Her bacak için ayrı yap.", targetReps: "10 - 12 Tekrar (Her Bacak)", setRest: 90, exRest: 120 },
+    { name: "5. Hollow Body Hold (Plank)", type: "time", duration: 60, sets: 3, target: "Tüm Karın Kasları & Core", detail: "Sırtüstü yat, belini yere yapıştır. Kolları ve bacakları kaldırarak karın kaslarını sıkarak bekle.", targetReps: "60 Saniye Sabit", setRest: 60, exRest: 0 }
   ];
 
-  // 1000+ Kombinasyonlu Dinamik Motivasyon Sözü Üreteci (Fok Balığı Algoritması)
+  // MOTİVASYON SÖZÜ ÜRETECİ (FOK BALIĞI)
   const sealWords = {
     openings: ["Arf! Arf! ", "Bip Bip! ", "Harika gidiyorsun! ", "Ooo şampiyon! ", "Gözlerindeki ateşi görüyorum! ", "Omuzlar alev aldı! ", "Odaklan! ", "Pes etmek yok! ", "Bırakma! ", "Kaslar büyüyor! "],
     actions: ["Bu sette ", "Son tekrarda ", "Şınav çekerken ", "Dinlenirken bile ", "Her harekette ", "Ter dökerken ", "Kasları zorlarken ", "Sınırları zorlarken "],
     complements: ["dev gibi oluyorsun! 🦭", "vücudun şekil alıyor!", "formun mükemmel görünüyor!", "acıyı hissediyorsan gelişim başladı demektir!", "disiplinin harika!", "1 ay sonraki haline kendin bile inanamayacaksın!", "tam bir canavara dönüşüyorsun!", "0 bahaneyle devam ediyorsun!"],
-    extraQuotes: [
-      "Şu an yoruluyorsun ama yarın daha güçlü uyanacaksın!",
-      "Son 3 tekrarı yapmayanlar sıradan kalır, sen şampiyonsun!",
-      "Fok balıkları bile senin bu azmine hayran kaldı!",
-      "1 ay boyunca bu disiplini korursan aynalar sana yetmeyecek!",
-      "Hadi bir set daha, pump hissini yakala!",
-      "Ter damlaları başarının imzasıdır şampiyon!",
-      "Sadece 5 egzersiz ama etkisi devasa!"
-    ]
+    extraQuotes: ["Şu an yoruluyorsun ama yarın daha güçlü uyanacaksın!", "Son 3 tekrarı yapmayanlar sıradan kalır, sen şampiyonsun!", "Fok balıkları bile senin bu azmine hayran kaldı!", "1 ay boyunca bu disiplini korursan aynalar sana yetmeyecek!", "Hadi bir set daha, pump hissini yakala!", "Ter damlaları başarının imzasıdır şampiyon!"]
   };
 
   function generateSealQuote() {
     if (Math.random() > 0.4) {
-      const o = sealWords.openings[Math.floor(Math.random() * sealWords.openings.length)];
-      const a = sealWords.actions[Math.floor(Math.random() * sealWords.actions.length)];
-      const c = sealWords.complements[Math.floor(Math.random() * sealWords.complements.length)];
-      return o + a + c;
+      return sealWords.openings[Math.floor(Math.random() * sealWords.openings.length)] + sealWords.actions[Math.floor(Math.random() * sealWords.actions.length)] + sealWords.complements[Math.floor(Math.random() * sealWords.complements.length)];
     } else {
       return sealWords.extraQuotes[Math.floor(Math.random() * sealWords.extraQuotes.length)];
     }
@@ -265,19 +233,19 @@
   function triggerSealQuote() {
     const el = document.getElementById("seal-speech");
     el.style.animation = 'none';
-    el.offsetHeight; // reflow
+    el.offsetHeight;
     el.style.animation = 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     el.innerText = generateSealQuote();
   }
-
-  // Otomatik Her 8 Saniyede Bir Söz Değiştir
   setInterval(triggerSealQuote, 8000);
 
-  // ZAMANLAYICI VE MANTIKSAL KODLAR
+  // MANTIK VE SAYAÇ SİSTEMİ
   let currentIndex = -1;
   let currentSet = 1;
   let isResting = false;
   let isTimeRunning = false;
+  let isWarmup = false;
+  let isCooldown = false;
   let timerInterval = null;
   let secondsLeft = 0;
   let totalSeconds = 0;
@@ -293,7 +261,13 @@
     ring.style.strokeDashoffset = offset;
   }
 
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    document.getElementById("sound-btn").innerText = soundEnabled ? "🔊 SES: AÇIK" : "🔇 SES: KAPALI";
+  }
+
   function playBeep() {
+    if(!soundEnabled) return;
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       const osc = ctx.createOscillator();
@@ -304,6 +278,32 @@
       osc.stop(ctx.currentTime + 0.3);
       if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
     } catch(e){}
+  }
+
+  // ISINMA VE SOĞUMA MODÜLÜ
+  function startWarmup() {
+    isWarmup = true;
+    document.getElementById("warmup-btn").style.display = "none";
+    document.getElementById("status-text").innerText = "DİNAMİK ISINMA";
+    document.getElementById("exercise-name").innerText = "Omuz Çevirme & Hafif Squat";
+    document.getElementById("info-box").style.display = "block";
+    document.getElementById("info-target").innerText = "🔥 ISINMA";
+    document.getElementById("info-detail").innerText = "Eklemleri ve nabzı antrenmana hazırla. Dairesel omuz hareketleri ve tempolu çömelmeler yap.";
+    document.getElementById("info-reps").innerText = "⏱️ Süre: 3 Dakika";
+    document.getElementById("action-btn").innerText = "ISINMAYI GEÇ";
+    startTimer(180);
+  }
+
+  function startCooldown() {
+    isCooldown = true;
+    document.getElementById("status-text").innerText = "STATİK ESNETME";
+    document.getElementById("exercise-name").innerText = "Kas Soğutma & Esnetme";
+    document.getElementById("info-box").style.display = "block";
+    document.getElementById("info-target").innerText = "🧊 SOĞUMA";
+    document.getElementById("info-detail").innerText = "Göğüs, omuz ve bacak kaslarını yavaşça esneterek derinden nefes al. Kas ağrılarını azaltır.";
+    document.getElementById("info-reps").innerText = "⏱️ Süre: 2 Dakika";
+    document.getElementById("action-btn").innerText = "ANTRENMANI BİTİR";
+    startTimer(120);
   }
 
   function updateUI() {
@@ -318,11 +318,13 @@
     const progressText = document.getElementById("progress-text");
     const setBadge = document.getElementById("set-badge");
     const repTracker = document.getElementById("rep-tracker");
+    const warmupBtn = document.getElementById("warmup-btn");
 
     if (currentIndex === -1) {
       setBadge.style.display = "none";
       infoBox.style.display = "none";
       repTracker.style.display = "none";
+      warmupBtn.style.display = "block";
       statusText.innerText = "ANTRENMANA HAZIRLAN";
       statusText.style.color = "#888";
       exName.innerText = "Full Body Hipertrofi";
@@ -331,10 +333,17 @@
       ring.setAttribute("stroke", "#00f2fe");
       btn.innerText = "ANTRENMANA BAŞLA";
       progressText.innerText = "0 / " + workout.length + " Egzersiz";
+      updateWeekUI();
       return;
     }
 
+    warmupBtn.style.display = "none";
+
     if (currentIndex >= workout.length) {
+      if(!isCooldown) {
+        startCooldown();
+        return;
+      }
       setBadge.style.display = "none";
       infoBox.style.display = "none";
       repTracker.style.display = "none";
@@ -346,6 +355,9 @@
       ring.setAttribute("stroke", "#00f2fe");
       btn.innerText = "YENİDEN BAŞLAT";
       progressText.innerText = workout.length + " / " + workout.length + " Egzersiz";
+      
+      // Streak Artır
+      markTodayCompleted();
       triggerSealQuote();
       return;
     }
@@ -364,7 +376,7 @@
         statusText.style.color = "#ff4757";
         ring.setAttribute("stroke", "#ff4757");
         let nextEx = workout[currentIndex + 1];
-        exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Bitiş");
+        exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Soğuma Esnetmesi");
       } else {
         statusText.innerText = "SET ARASI DİNLENME";
         statusText.style.color = "#ffa502";
@@ -401,7 +413,22 @@
 
   function nextStep() {
     clearInterval(timerInterval);
-    triggerSealQuote(); // Her aşamada fok balığı yeni bir laf söylesin
+    triggerSealQuote();
+
+    if(isWarmup) {
+      isWarmup = false;
+      currentIndex = 0;
+      currentSet = 1;
+      updateUI();
+      return;
+    }
+
+    if(isCooldown) {
+      isCooldown = false;
+      currentIndex = workout.length;
+      updateUI();
+      return;
+    }
 
     if (currentIndex === -1 || currentIndex >= workout.length) {
       currentIndex = 0;
@@ -418,7 +445,7 @@
       if (current.type === "reps") {
         const val = document.getElementById("rep-input").value;
         if(val) {
-          localStorage.setItem(`ex_${currentIndex}_set_${currentSet}`, val);
+          saveHistory(current.name, currentSet, val);
           document.getElementById("rep-input").value = "";
         }
       }
@@ -483,8 +510,66 @@
     document.getElementById("timer").innerText = `${m}:${s}`;
   }
 
+  // MODAL VE GEÇMİŞ YÖNETİMİ
+  function saveHistory(exName, setNum, reps) {
+    let history = JSON.parse(localStorage.getItem('workout_history') || '[]');
+    const dateStr = new Date().toLocaleDateString('tr-TR');
+    history.unshift({ date: dateStr, ex: exName, set: setNum, reps: reps });
+    localStorage.setItem('workout_history', JSON.stringify(history));
+  }
+
+  function openHistoryModal() {
+    const modal = document.getElementById("history-modal");
+    const list = document.getElementById("history-list");
+    let history = JSON.parse(localStorage.getItem('workout_history') || '[]');
+    
+    if(history.length === 0) {
+      list.innerHTML = "<p style='color:#777;'>Henüz kaydedilmiş bir tekrar yok.</p>";
+    } else {
+      list.innerHTML = history.slice(0, 20).map(h => 
+        `<div class="history-item">
+          <strong>${h.ex}</strong> (${h.set}. Set)<br>
+          <span style="color:#2ed573; font-weight:bold;">${h.reps} Tekrar</span> - <small style="color:#777;">${h.date}</small>
+        </div>`
+      ).join('');
+    }
+    modal.style.display = "flex";
+  }
+
+  function closeHistoryModal() {
+    document.getElementById("history-modal").style.display = "none";
+  }
+
+  // STREAK VE TAKVİM İŞLEMLERİ
+  function updateWeekUI() {
+    const todayIndex = (new Date().getDay() + 6) % 7; // Pzt: 0, Paz: 6
+    let completedDays = JSON.parse(localStorage.getItem('completed_days') || '[]');
+    let streak = localStorage.getItem('workout_streak') || 0;
+
+    document.getElementById("streak-badge").innerText = `🔥 ${streak} GÜN SERİ`;
+
+    for(let i = 0; i < 7; i++) {
+      const el = document.getElementById(`d-${i}`).parentElement;
+      if(i === todayIndex) el.classList.add('active');
+      if(completedDays.includes(i)) el.classList.add('done');
+    }
+  }
+
+  function markTodayCompleted() {
+    const todayIndex = (new Date().getDay() + 6) % 7;
+    let completedDays = JSON.parse(localStorage.getItem('completed_days') || '[]');
+    if(!completedDays.includes(todayIndex)) {
+      completedDays.push(todayIndex);
+      localStorage.setItem('completed_days', JSON.stringify(completedDays));
+      let streak = parseInt(localStorage.getItem('workout_streak') || 0) + 1;
+      localStorage.setItem('workout_streak', streak);
+    }
+    updateWeekUI();
+  }
+
   updateUI();
 </script>
 
 </body>
 </html>
+
