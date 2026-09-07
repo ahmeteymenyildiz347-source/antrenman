@@ -9,9 +9,9 @@
     body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
     .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
     
-    /* Video Kutusu */
-    .media-container { width: 100%; height: 210px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #000; }
-    .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+    .media-container { width: 100%; height: 210px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #000; position: relative; }
+    /* YouTube penceresini tam sığdırmak ve dokunmayı engellemek için */
+    .media-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
 
     h1 { margin-top: 0; color: #4facfe; font-size: 22px; margin-bottom: 15px; }
     .status { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold; color: #888; }
@@ -34,7 +34,7 @@
   <h1>ANTRENMAN KOÇU</h1>
   
   <div class="media-container" id="media-container">
-    <img id="exercise-media" src="" alt="Egzersiz Gösterimi">
+    <iframe id="exercise-media" src="" allow="autoplay; fullscreen"></iframe>
   </div>
 
   <div class="status" id="status-text">HAZIR</div>
@@ -56,13 +56,56 @@
 </div>
 
 <script>
-  // Web sunucusunda engellenmeden doğrudan çalışan görsel/video CDN bağlantıları
+  // Döngünün (loop) YouTube'da çalışması için "playlist" parametresine aynı video ID'sini tekrar yazman gerekir.
+  // Örnek: embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0
+  
   const workout = [
-    { name: "1. Pike Push-Up", type: "reps", sets: 3, detail: "Hedef: 8-12 Tekrar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1ODJ2azkyNndwZHhhNmt6OWRneTRmNm4yNndpbmU0dnN4MHFnciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" },
-    { name: "2. Standart Şınav", type: "reps", sets: 4, detail: "Hedef: Tükenişe Kadar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZydW0wazlsZHowNXJ4bTBubWNodmFia3lhZXFqMHpxOGpnbjMzbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKx97lOshf8Wzja/giphy.gif" },
-    { name: "3. Prone Y-T-W", type: "reps", sets: 3, detail: "Hedef: Her Harf 10 Tekrar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/3o7TKT0631G1D03C5q/giphy.gif" },
-    { name: "4. Tempolu Squat", type: "reps", sets: 4, detail: "Hedef: 15-20 Tekrar (3sn İniş)", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2RveDdrNWsxeXZ0OHFucWhxcWswb3N4YmsyaHR4MnlsZXpkaXZ1eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT8qB32z7qK4VzRj4A/giphy.gif" },
-    { name: "5. Plank", type: "time", duration: 60, sets: 3, detail: "Hedef: 60 Saniye Statik", setRest: 60, exRest: 0, media: "https://media.giphy.com/media/3o7TKRnoP3f4fOxd3G/giphy.gif" }
+    { 
+      name: "1. Pike Push-Up", 
+      type: "reps", 
+      sets: 3, 
+      detail: "Hedef: 8-12 Tekrar", 
+      setRest: 90, 
+      exRest: 120, 
+      media: "https://www.youtube.com/embed/sp4JEAzt3Q8?autoplay=1&mute=1&loop=1&playlist=sp4JEAzt3Q8&controls=0&modestbranding=1" 
+    },
+    { 
+      name: "2. Standart Şınav", 
+      type: "reps", 
+      sets: 4, 
+      detail: "Hedef: Tükenişe Kadar", 
+      setRest: 90, 
+      exRest: 120, 
+      media: "https://www.youtube.com/embed/IODxDxX7oi4?autoplay=1&mute=1&loop=1&playlist=IODxDxX7oi4&controls=0&modestbranding=1" 
+    },
+    { 
+      name: "3. Prone Y-T-W", 
+      type: "reps", 
+      sets: 3, 
+      detail: "Hedef: Her Harf 10 Tekrar", 
+      setRest: 90, 
+      exRest: 120, 
+      media: "https://www.youtube.com/embed/jZ_E5M1y4aE?autoplay=1&mute=1&loop=1&playlist=jZ_E5M1y4aE&controls=0&modestbranding=1" 
+    },
+    { 
+      name: "4. Tempolu Squat", 
+      type: "reps", 
+      sets: 4, 
+      detail: "Hedef: 15-20 Tekrar (3sn İniş)", 
+      setRest: 90, 
+      exRest: 120, 
+      media: "https://www.youtube.com/embed/gs03sUerYnE?autoplay=1&mute=1&loop=1&playlist=gs03sUerYnE&controls=0&modestbranding=1" 
+    },
+    { 
+      name: "5. Plank", 
+      type: "time", 
+      duration: 60, 
+      sets: 3, 
+      detail: "Hedef: 60 Saniye Statik", 
+      setRest: 60, 
+      exRest: 0, 
+      media: "https://www.youtube.com/embed/ASdvN_XEl_c?autoplay=1&mute=1&loop=1&playlist=ASdvN_XEl_c&controls=0&modestbranding=1" 
+    }
   ];
 
   let currentIndex = -1;
@@ -147,6 +190,9 @@
         exDetail.innerText = (currentSet + 1) + ". Set için nefeslen (90s).";
       }
       btn.innerText = "DİNLENMEYİ GEÇ";
+      
+      // Dinlenme süresince videonun arkada oynamaması ve ses yapmaması için kaynağı boşalt
+      exerciseMedia.src = "";
     } else {
       mediaContainer.style.display = "block";
       
@@ -202,54 +248,20 @@
       if (currentIndex === workout.length - 1 && currentSet >= current.sets) {
         currentIndex++;
         isResting = false;
-        updateUI();
-        return;
-      }
+HTML tabanlı temel web iskeleti üzerinden ilerliyoruz. Başlangıç için standart bir HTML5 şablonunu aşağıda bulabilirsin:
 
-      let restTime = (currentSet >= current.sets) ? current.exRest : current.setRest;
-      updateUI();
-      startTimer(restTime);
-    } else {
-      isResting = false;
-      if (currentSet >= workout[currentIndex].sets) {
-        currentSet = 1;
-        currentIndex++;
-      } else {
-        currentSet++;
-      }
-      updateUI();
-    }
-  }
+```html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Projesi</title>
+</head>
+<body>
 
-  function startTimer(seconds) {
-    clearInterval(timerInterval);
-    totalSeconds = seconds;
-    secondsLeft = seconds;
-    formatTimeToDisplay(secondsLeft);
-    setRingProgress(100);
-
-    timerInterval = setInterval(() => {
-      secondsLeft--;
-      formatTimeToDisplay(secondsLeft);
-      
-      let percent = (secondsLeft / totalSeconds) * 100;
-      setRingProgress(percent);
-
-      if (secondsLeft <= 0) {
-        clearInterval(timerInterval);
-        nextStep();
-      }
-    }, 1000);
-  }
-
-  function formatTimeToDisplay(sec) {
-    const m = Math.floor(sec / 60).toString().padStart(2, '0');
-    const s = (sec % 60).toString().padStart(2, '0');
-    document.getElementById("timer").innerText = `${m}:${s}`;
-  }
-
-  updateUI();
-</script>
+    <!-- İçerik buraya gelecek -->
 
 </body>
 </html>
+
