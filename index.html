@@ -3,44 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Body Pro Koç</title>
+  <title>Full Body Pro & Fok Koç</title>
   <style>
+    :root {
+      --primary: #00f2fe;
+      --secondary: #4facfe;
+      --accent: #ff4757;
+      --bg: #0a0a0c;
+      --card-bg: rgba(22, 24, 30, 0.95);
+    }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
-    .card { background: #1e1e1e; border-radius: 18px; padding: 24px; width: 100%; max-width: 440px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #2a2a2a; }
-    
-    h1 { margin-top: 0; color: #4facfe; font-size: 24px; margin-bottom: 5px; font-weight: 800; }
-    .subtitle { font-size: 13px; color: #777; margin-bottom: 20px; }
-    
-    .status { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: bold; color: #888; }
-    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.15); color: #00f2fe; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
-    .exercise-name { font-size: 22px; font-weight: bold; margin-bottom: 8px; color: #fff; }
-    
-    /* Detaylı Bilgi Kutusu */
-    .info-box { background: #262626; border-radius: 12px; padding: 14px; margin-bottom: 20px; text-align: left; border-left: 4px solid #00f2fe; }
-    .info-target { font-size: 13px; font-weight: bold; color: #00f2fe; margin-bottom: 4px; }
-    .info-detail { font-size: 14px; color: #ccc; line-height: 1.4; }
+    body { 
+      background: var(--bg); 
+      background-image: radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08), transparent 70%);
+      color: #fff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      margin: 0; 
+      padding: 15px; 
+      overflow-x: hidden;
+    }
 
-    /* Rep Kayıt Input Kutusu */
-    .rep-tracker { display: none; margin-bottom: 20px; background: #1a1a1a; padding: 10px; border-radius: 10px; }
-    .rep-tracker label { font-size: 14px; color: #aaa; margin-right: 10px; }
-    .rep-tracker input { width: 70px; background: #333; border: 1px solid #444; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 16px; text-align: center; }
+    .card { 
+      background: var(--card-bg); 
+      border-radius: 24px; 
+      padding: 28px 24px; 
+      width: 100%; 
+      max-width: 420px; 
+      text-align: center; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 20px rgba(0, 242, 254, 0.1); 
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 2;
+    }
+    
+    h1 { 
+      margin-top: 0; 
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 26px; 
+      margin-bottom: 4px; 
+      font-weight: 900; 
+      letter-spacing: -0.5px;
+    }
+    .subtitle { font-size: 12px; color: #666; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    
+    .status { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 800; color: #888; }
+    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.12); color: var(--primary); padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 800; margin-bottom: 15px; border: 1px solid rgba(0, 242, 254, 0.25); }
+    .exercise-name { font-size: 22px; font-weight: 800; margin-bottom: 12px; color: #fff; letter-spacing: -0.5px; }
+    
+    /* Detay Kartı */
+    .info-box { background: rgba(255,255,255,0.03); border-radius: 14px; padding: 14px; margin-bottom: 18px; text-align: left; border: 1px solid rgba(255,255,255,0.06); }
+    .info-target { font-size: 12px; font-weight: 800; color: var(--primary); margin-bottom: 4px; text-transform: uppercase; }
+    .info-detail { font-size: 13px; color: #bbb; line-height: 1.4; margin-bottom: 8px; }
+    .info-reps { font-size: 13px; font-weight: 700; color: #2ed573; background: rgba(46, 213, 115, 0.1); padding: 4px 8px; border-radius: 6px; display: inline-block; }
+
+    /* Rep Input */
+    .rep-tracker { display: none; margin-bottom: 18px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px; }
+    .rep-tracker label { font-size: 13px; color: #aaa; margin-right: 10px; font-weight: 600; }
+    .rep-tracker input { width: 70px; background: #222; border: 1px solid #444; color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 16px; text-align: center; font-weight: bold; }
 
     /* Dairesel Sayaç */
-    .ring-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto; }
+    .ring-container { position: relative; width: 140px; height: 140px; margin: 0 auto 20px auto; }
     .progress-ring__circle { transition: stroke-dashoffset 1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
-    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 36px; font-weight: bold; color: #fff; }
+    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; }
 
-    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #000; border: none; padding: 16px 28px; font-size: 18px; font-weight: 800; border-radius: 12px; cursor: pointer; width: 100%; transition: transform 0.1s, opacity 0.2s; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25); }
+    /* Buton */
+    .btn { 
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
+      color: #000; 
+      border: none; 
+      padding: 16px 28px; 
+      font-size: 16px; 
+      font-weight: 900; 
+      border-radius: 14px; 
+      cursor: pointer; 
+      width: 100%; 
+      transition: all 0.2s; 
+      box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3); 
+    }
     .btn:active { transform: scale(0.97); opacity: 0.9; }
-    .progress { margin-top: 15px; font-size: 13px; color: #666; font-weight: 500; }
+    .progress { margin-top: 15px; font-size: 12px; color: #555; font-weight: 700; text-transform: uppercase; }
+
+    /* --- SAĞDAKİ MOTİVASYON FOK BALIĞI --- */
+    .seal-widget {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      z-index: 99;
+      max-width: 200px;
+      pointer-events: none;
+    }
+    .seal-speech {
+      background: #ffffff;
+      color: #121212;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border-bottom-right-radius: 2px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      margin-bottom: 8px;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      line-height: 1.3;
+      text-align: right;
+    }
+    .seal-avatar {
+      font-size: 42px;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+      animation: float 3s ease-in-out infinite;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(5deg); }
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.5) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .seal-widget { right: 10px; bottom: 10px; max-width: 150px; }
+      .seal-speech { font-size: 11px; padding: 8px 10px; }
+      .seal-avatar { font-size: 36px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>🔥 FULL BODY KOÇ</h1>
-  <div class="subtitle">1 Aylık Calisthenics Hipertrofi Programı</div>
+  <h1>FULL BODY PRO</h1>
+  <div class="subtitle">1 Aylık Calisthenics Programı</div>
 
   <div class="status" id="status-text">ANTRENMANA HAZIRLAN</div>
   <div class="set-badge" id="set-badge" style="display:none;"></div>
@@ -50,6 +153,7 @@
   <div class="info-box" id="info-box" style="display:none;">
     <div class="info-target" id="info-target">HEDEF KASLAR</div>
     <div class="info-detail" id="info-detail">Açıklama</div>
+    <div class="info-reps" id="info-reps">🎯 Hedef: 0 Tekrar</div>
   </div>
 
   <div class="rep-tracker" id="rep-tracker">
@@ -58,9 +162,9 @@
   </div>
 
   <div class="ring-container" id="ring-container">
-    <svg class="progress-ring" width="150" height="150">
-      <circle stroke="#2a2a2a" stroke-width="8" fill="transparent" r="65" cx="75" cy="75"/>
-      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="65" cx="75" cy="75"/>
+    <svg class="progress-ring" width="140" height="140">
+      <circle stroke="#1e2026" stroke-width="8" fill="transparent" r="60" cx="70" cy="70"/>
+      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="60" cx="70" cy="70"/>
     </svg>
     <div class="timer-display" id="timer">00:00</div>
   </div>
@@ -69,23 +173,32 @@
   <div class="progress" id="progress-text">0 / 5 Egzersiz</div>
 </div>
 
+<!-- SAĞ TARAFTAKİ MOTİVASYON FOK BALIĞI KOÇU -->
+<div class="seal-widget">
+  <div class="seal-speech" id="seal-speech">Arf! Arf! Bugün kasları patlatma günü şampiyon! 🦭</div>
+  <div class="seal-avatar" onclick="triggerSealQuote()">🦭</div>
+</div>
+
 <script>
+  // Barfiks yerine Y-T-W / Superman eklendi, Tahmini Şınav/Tekrar sayıları güncellendi.
   const workout = [
     { 
       name: "1. Pike Push-Up", 
       type: "reps", 
       sets: 3, 
-      target: "Omuzlar (Ön/Yan Deltoid) & Üst Göğüs",
-      detail: "Kalçayı yukarı kaldırarak 'V' şekli al. Başını ellerinin biraz önüne doğru yavaşça indir ve omuz gücünle kendini geriye it.", 
+      target: "Omuzlar & Üst Göğüs",
+      detail: "Kalçanı yukarı kaldır 'V' ol. Başını ellerinin biraz önüne indirip omuz gücünle kendini geriye it.", 
+      targetReps: "8 - 12 Tekrar",
       setRest: 90, 
       exRest: 120 
     },
     { 
-      name: "2. Barfiks veya Inverted Row", 
+      name: "2. Prone Y-T-W / Superman", 
       type: "reps", 
       sets: 3, 
-      target: "Sırt (Kanat Kasları), Arka Omuz & Biceps",
-      detail: "Barfiks barında veya sağlam bir masa/sopa altında göğsünü bara doğru çek. İnerken yavaş in, sırt kaslarının gerildiğini hisset.", 
+      target: "Tüm Sırt, Arka Omuz & Duruş Kasları",
+      detail: "Yüzüstü yat. Kolları sırasıyla Y, T ve W yapıp havaya kaldır. Kürek kemiklerini 2 saniye sık.", 
+      targetReps: "12 - 15 Kombinasyon",
       setRest: 90, 
       exRest: 120 
     },
@@ -94,7 +207,8 @@
       type: "reps", 
       sets: 4, 
       target: "Göğüs, Ön Omuz & Triceps (Arka Kol)",
-      detail: "Vücut dümdüz bir tahta gibi olsun. Dirsekleri dışarı kırma, gövdeye 45 derece açıyla geriye bük. Göğsün yere yaklaşana kadar in.", 
+      detail: "Vücut ok gibi dümdüz. Göğüs yere değene kadar yavaş in, patlayıcı şekilde yukarı kendini it.", 
+      targetReps: "15 - 20 Şınav (Tükeniş)",
       setRest: 90, 
       exRest: 120 
     },
@@ -102,23 +216,64 @@
       name: "4. Bulgarian Split Squat", 
       type: "reps", 
       sets: 3, 
-      target: "Ön Bacak (Quadriceps), Kalça & Arka Bacak",
-      detail: "Bir ayağını arkadaki koltuğa koy. Öndeki bacağın üzerinde 90 derece bükülerek aşağı çök. Her bacak için ayrı ayrı uygula.", 
+      target: "Ön Bacak, Kalça & Arka Bacak",
+      detail: "Bir ayağını arkadaki koltuğa koy. Öndeki bacağın üzerine 90 derece çök. Her bacak için ayrı ayrı yap.", 
+      targetReps: "10 - 12 Tekrar (Her Bacak)",
       setRest: 90, 
       exRest: 120 
     },
     { 
-      name: "5. Hollow Body Hold (veya Plank)", 
+      name: "5. Hollow Body Hold (Plank)", 
       type: "time", 
       duration: 60, 
       sets: 3, 
       target: "Tüm Karın Kasları & Core Bölgesi",
-      detail: "Sırtüstü yat, belini yere tamamen yapıştır. Kolları ve bacakları hafifçe kaldırarak muz şekli al ve karın kaslarını sıkarak bekle.", 
+      detail: "Sırtüstü yat, belini yere yapıştır. Kolları ve bacakları kaldırarak karın kaslarını sıkarak sabit bekle.", 
+      targetReps: "60 Saniye Sabit",
       setRest: 60, 
       exRest: 0 
     }
   ];
 
+  // 1000+ Kombinasyonlu Dinamik Motivasyon Sözü Üreteci (Fok Balığı Algoritması)
+  const sealWords = {
+    openings: ["Arf! Arf! ", "Bip Bip! ", "Harika gidiyorsun! ", "Ooo şampiyon! ", "Gözlerindeki ateşi görüyorum! ", "Omuzlar alev aldı! ", "Odaklan! ", "Pes etmek yok! ", "Bırakma! ", "Kaslar büyüyor! "],
+    actions: ["Bu sette ", "Son tekrarda ", "Şınav çekerken ", "Dinlenirken bile ", "Her harekette ", "Ter dökerken ", "Kasları zorlarken ", "Sınırları zorlarken "],
+    complements: ["dev gibi oluyorsun! 🦭", "vücudun şekil alıyor!", "formun mükemmel görünüyor!", "acıyı hissediyorsan gelişim başladı demektir!", "disiplinin harika!", "1 ay sonraki haline kendin bile inanamayacaksın!", "tam bir canavara dönüşüyorsun!", "0 bahaneyle devam ediyorsun!"],
+    extraQuotes: [
+      "Şu an yoruluyorsun ama yarın daha güçlü uyanacaksın!",
+      "Son 3 tekrarı yapmayanlar sıradan kalır, sen şampiyonsun!",
+      "Fok balıkları bile senin bu azmine hayran kaldı!",
+      "1 ay boyunca bu disiplini korursan aynalar sana yetmeyecek!",
+      "Hadi bir set daha, pump hissini yakala!",
+      "Ter damlaları başarının imzasıdır şampiyon!",
+      "Sadece 5 egzersiz ama etkisi devasa!"
+    ]
+  };
+
+  function generateSealQuote() {
+    if (Math.random() > 0.4) {
+      const o = sealWords.openings[Math.floor(Math.random() * sealWords.openings.length)];
+      const a = sealWords.actions[Math.floor(Math.random() * sealWords.actions.length)];
+      const c = sealWords.complements[Math.floor(Math.random() * sealWords.complements.length)];
+      return o + a + c;
+    } else {
+      return sealWords.extraQuotes[Math.floor(Math.random() * sealWords.extraQuotes.length)];
+    }
+  }
+
+  function triggerSealQuote() {
+    const el = document.getElementById("seal-speech");
+    el.style.animation = 'none';
+    el.offsetHeight; // reflow
+    el.style.animation = 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    el.innerText = generateSealQuote();
+  }
+
+  // Otomatik Her 8 Saniyede Bir Söz Değiştir
+  setInterval(triggerSealQuote, 8000);
+
+  // ZAMANLAYICI VE MANTIKSAL KODLAR
   let currentIndex = -1;
   let currentSet = 1;
   let isResting = false;
@@ -138,7 +293,6 @@
     ring.style.strokeDashoffset = offset;
   }
 
-  // Sesli Uyarı Sistemi (Bip Tonu)
   function playBeep() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -158,6 +312,7 @@
     const infoBox = document.getElementById("info-box");
     const infoTarget = document.getElementById("info-target");
     const infoDetail = document.getElementById("info-detail");
+    const infoReps = document.getElementById("info-reps");
     const timerDisplay = document.getElementById("timer");
     const btn = document.getElementById("action-btn");
     const progressText = document.getElementById("progress-text");
@@ -185,12 +340,13 @@
       repTracker.style.display = "none";
       statusText.innerText = "TEBRİKLER!";
       statusText.style.color = "#00f2fe";
-      exName.innerText = "Antrenman Tamamlandı";
+      exName.innerText = "Antrenman Bitti";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
       btn.innerText = "YENİDEN BAŞLAT";
       progressText.innerText = workout.length + " / " + workout.length + " Egzersiz";
+      triggerSealQuote();
       return;
     }
 
@@ -204,7 +360,7 @@
       repTracker.style.display = "none";
 
       if (currentSet >= current.sets) {
-        statusText.innerText = "HAREKETLER ARASI GEÇİŞ DİNLENMESİ";
+        statusText.innerText = "HAREKETLER ARASI GEÇİŞ";
         statusText.style.color = "#ff4757";
         ring.setAttribute("stroke", "#ff4757");
         let nextEx = workout[currentIndex + 1];
@@ -218,8 +374,9 @@
       btn.innerText = "DİNLENMEYİ GEÇ";
     } else {
       infoBox.style.display = "block";
-      infoTarget.innerText = "🎯 HEDEF: " + current.target;
+      infoTarget.innerText = "🎯 HEDEF KAS: " + current.target;
       infoDetail.innerText = current.detail;
+      infoReps.innerText = "🎯 Hedef: " + current.targetReps;
 
       statusText.innerText = "EGZERSİZ ZAMANI";
       statusText.style.color = "#2ed573";
@@ -244,6 +401,7 @@
 
   function nextStep() {
     clearInterval(timerInterval);
+    triggerSealQuote(); // Her aşamada fok balığı yeni bir laf söylesin
 
     if (currentIndex === -1 || currentIndex >= workout.length) {
       currentIndex = 0;
@@ -257,7 +415,6 @@
     if (!isResting) {
       const current = workout[currentIndex];
       
-      // Kaydedilen tekrarları hafızaya al
       if (current.type === "reps") {
         const val = document.getElementById("rep-input").value;
         if(val) {
