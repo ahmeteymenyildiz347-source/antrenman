@@ -3,50 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antrenman Koçu</title>
+  <title>Antrenman Koçu Pro</title>
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
-    .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.8); }
     
-    .media-container { width: 100%; height: 210px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #fff; position: relative; }
-    .media-container img, .media-container video { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+    /* Video ve GIF Kutusu */
+    .media-container { width: 100%; height: 220px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #2a2a2a; position: relative; }
+    .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
 
-    h1 { margin-top: 0; color: #4facfe; font-size: 22px; margin-bottom: 15px; }
+    h1 { margin-top: 0; color: #4facfe; font-size: 24px; margin-bottom: 15px; font-weight: 800; letter-spacing: -0.5px; }
     .status { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold; color: #888; }
     .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.15); color: #00f2fe; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
-    .exercise-name { font-size: 22px; font-weight: bold; margin-bottom: 8px; min-height: 28px; }
-    .detail { font-size: 15px; color: #aaa; margin-bottom: 15px; }
+    .exercise-name { font-size: 24px; font-weight: bold; margin-bottom: 8px; min-height: 30px; color: #fff; }
+    .detail { font-size: 15px; color: #aaa; margin-bottom: 20px; line-height: 1.4; }
     
-    .ring-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto; }
+    /* Dairesel Sayaç */
+    .ring-container { position: relative; width: 160px; height: 160px; margin: 0 auto 25px auto; }
     .progress-ring__circle { transition: stroke-dashoffset 1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
-    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 36px; font-weight: bold; color: #fff; }
+    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; font-weight: bold; color: #fff; }
 
-    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #121212; border: none; padding: 14px 28px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; transition: opacity 0.2s; }
-    .btn:active { opacity: 0.8; }
-    .progress { margin-top: 15px; font-size: 14px; color: #666; }
+    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #000; border: none; padding: 16px 28px; font-size: 18px; font-weight: 800; border-radius: 14px; cursor: pointer; width: 100%; transition: transform 0.1s, opacity 0.2s; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3); }
+    .btn:active { transform: scale(0.97); opacity: 0.9; }
+    .progress { margin-top: 20px; font-size: 14px; color: #777; font-weight: 500; }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>ANTRENMAN KOÇU</h1>
+  <h1>🔥 FULL BODY PRO</h1>
   
   <div class="media-container" id="media-container">
     <video id="exercise-video" autoplay loop muted playsinline style="display:none;"></video>
     <img id="exercise-img" src="" alt="Egzersiz" style="display:none;">
   </div>
 
-  <div class="status" id="status-text">HAZIR</div>
+  <div class="status" id="status-text">ANTRENMANA HAZIRLAN</div>
   <div class="set-badge" id="set-badge" style="display:none;"></div>
   
-  <div class="exercise-name" id="exercise-name">Antrenmana Başla</div>
-  <div class="detail" id="exercise-detail">Odaklan ve Hacim Kazan</div>
+  <div class="exercise-name" id="exercise-name">Vücut Ağırlığı Rutini</div>
+  <div class="detail" id="exercise-detail">Kas Gelişimi İçin Optimal Dinlenme</div>
 
   <div class="ring-container" id="ring-container">
-    <svg class="progress-ring" width="150" height="150">
-      <circle stroke="#333" stroke-width="8" fill="transparent" r="65" cx="75" cy="75"/>
-      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="65" cx="75" cy="75"/>
+    <svg class="progress-ring" width="160" height="160">
+      <circle stroke="#2a2a2a" stroke-width="8" fill="transparent" r="70" cx="80" cy="80"/>
+      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80"/>
     </svg>
     <div class="timer-display" id="timer">00:00</div>
   </div>
@@ -56,49 +58,50 @@
 </div>
 
 <script>
+  // Tam ve Bilimsel Full Body Antrenmanı (Calisthenics)
   const workout = [
     { 
       name: "1. Pike Push-Up", 
       type: "reps", 
       sets: 3, 
-      detail: "Omuzları hizala, başı yere yaklaştır.", 
+      detail: "Omuz ve Üst Göğüs.\nHedef: 8-12 Tekrar.", 
       setRest: 90, 
       exRest: 120, 
       media: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Pike_push_up.gif" 
     },
     { 
-      name: "2. Standart Şınav", 
+      name: "2. Barfiks (veya Inverted Row)", 
+      type: "reps", 
+      sets: 3, 
+      detail: "Sırt ve Biceps.\nHedef: Tükenişe Yakın.", 
+      setRest: 90, 
+      exRest: 120, 
+      media: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pullup.gif" 
+    },
+    { 
+      name: "3. Standart Şınav", 
       type: "reps", 
       sets: 4, 
-      detail: "Gövde düz, dirsekleri geriye bük.", 
+      detail: "Göğüs ve Triceps.\nHedef: Formu bozmadan tükeniş.", 
       setRest: 90, 
       exRest: 120, 
       media: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Pushups.gif" 
     },
     { 
-      name: "3. Prone Y-T-W", 
+      name: "4. Bulgarian Split Squat", 
       type: "reps", 
       sets: 3, 
-      detail: "Yüzüstü uzan; kolları Y, T ve W yap.", 
+      detail: "Ön Bacak ve Kalça.\nHedef: Her bacak için 10-15 Tekrar.", 
       setRest: 90, 
       exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Y-Raise.gif" 
+      media: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Bulgarian_Split_Squat.gif" 
     },
     { 
-      name: "4. Tempolu Squat", 
-      type: "reps", 
-      sets: 4, 
-      detail: "3s yavaş in, patlayıcı kalk.", 
-      setRest: 90, 
-      exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/1/18/Squats_01.gif" 
-    },
-    { 
-      name: "5. Plank", 
+      name: "5. Hollow Body (veya Plank)", 
       type: "time", 
       duration: 60, 
       sets: 3, 
-      detail: "Dirsekler üstünde düz çizgi bekle.", 
+      detail: "Merkez Bölge (Core).\nHedef: 60 saniye boyunca kasılı kal.", 
       setRest: 60, 
       exRest: 0, 
       media: "https://upload.wikimedia.org/wikipedia/commons/2/23/Plank_exercise.gif" 
@@ -124,6 +127,7 @@
     ring.style.strokeDashoffset = offset;
   }
 
+  // Medyayı sorunsuz oynatmak için geliştirilmiş fonksiyon
   function renderMedia(mediaUrl) {
     const videoEl = document.getElementById("exercise-video");
     const imgEl = document.getElementById("exercise-img");
@@ -140,7 +144,7 @@
       videoEl.style.display = "block";
       if (videoEl.src !== mediaUrl) {
         videoEl.src = mediaUrl;
-        videoEl.play().catch(e => console.log("Otomatik oynatma engellendi", e));
+        videoEl.play().catch(e => console.log("Otomatik oynatma bekliyor."));
       }
     } else {
       videoEl.style.display = "none";
@@ -165,10 +169,10 @@
     if (currentIndex === -1) {
       setBadge.style.display = "none";
       mediaContainer.style.display = "none";
-      statusText.innerText = "HAZIR";
+      statusText.innerText = "ANTRENMANA HAZIRLAN";
       statusText.style.color = "#888";
-      exName.innerText = "Tüm Vücut Hacim";
-      exDetail.innerText = "Büyüme Odaklı Sistem";
+      exName.innerText = "Vücut Ağırlığı Rutini";
+      exDetail.innerText = "Tüm kas gruplarını çalıştıran sistem.";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
@@ -184,7 +188,7 @@
       statusText.innerText = "TEBRİKLER!";
       statusText.style.color = "#00f2fe";
       exName.innerText = "Antrenman Bitti";
-      exDetail.innerText = "Güzel iş çıkardın!";
+      exDetail.innerText = "Kaslar uyarıldı, şimdi protein ve dinlenme vakti!";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
@@ -200,7 +204,7 @@
 
     if (isResting) {
       mediaContainer.style.display = "none"; 
-      renderMedia(""); // Dinlenirken medyayı durdur/kapat
+      renderMedia(""); 
 
       if (currentSet >= current.sets) {
         statusText.innerText = "HAREKETLER ARASI GEÇİŞ";
@@ -208,13 +212,13 @@
         ring.setAttribute("stroke", "#ff4757");
         let nextEx = workout[currentIndex + 1];
         exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Bitiş");
-        exDetail.innerText = "2 dakika dinlen, odağını topla.";
+        exDetail.innerText = "2 dakika dinlen. Nabzını düşür ve diğer kasa odaklan.";
       } else {
         statusText.innerText = "SET ARASI DİNLENME";
         statusText.style.color = "#ffa502";
         ring.setAttribute("stroke", "#ffa502");
         exName.innerText = current.name;
-        exDetail.innerText = (currentSet + 1) + ". Set için nefeslen (90s).";
+        exDetail.innerText = "Kaslarındaki ATP depoları doluyor. Bekle. (90 sn)";
       }
       btn.innerText = "DİNLENMEYİ GEÇ";
     } else {
@@ -320,3 +324,4 @@
 
 </body>
 </html>
+
