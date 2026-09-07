@@ -3,108 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antrenman Koçu Pro</title>
+  <title>Full Body Pro Koç</title>
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
-    .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.8); }
+    .card { background: #1e1e1e; border-radius: 18px; padding: 24px; width: 100%; max-width: 440px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #2a2a2a; }
     
-    /* Video ve GIF Kutusu */
-    .media-container { width: 100%; height: 220px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #2a2a2a; position: relative; }
-    .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+    h1 { margin-top: 0; color: #4facfe; font-size: 24px; margin-bottom: 5px; font-weight: 800; }
+    .subtitle { font-size: 13px; color: #777; margin-bottom: 20px; }
+    
+    .status { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: bold; color: #888; }
+    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.15); color: #00f2fe; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
+    .exercise-name { font-size: 22px; font-weight: bold; margin-bottom: 8px; color: #fff; }
+    
+    /* Detaylı Bilgi Kutusu */
+    .info-box { background: #262626; border-radius: 12px; padding: 14px; margin-bottom: 20px; text-align: left; border-left: 4px solid #00f2fe; }
+    .info-target { font-size: 13px; font-weight: bold; color: #00f2fe; margin-bottom: 4px; }
+    .info-detail { font-size: 14px; color: #ccc; line-height: 1.4; }
 
-    h1 { margin-top: 0; color: #4facfe; font-size: 24px; margin-bottom: 15px; font-weight: 800; letter-spacing: -0.5px; }
-    .status { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold; color: #888; }
-    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.15); color: #00f2fe; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
-    .exercise-name { font-size: 24px; font-weight: bold; margin-bottom: 8px; min-height: 30px; color: #fff; }
-    .detail { font-size: 15px; color: #aaa; margin-bottom: 20px; line-height: 1.4; }
-    
+    /* Rep Kayıt Input Kutusu */
+    .rep-tracker { display: none; margin-bottom: 20px; background: #1a1a1a; padding: 10px; border-radius: 10px; }
+    .rep-tracker label { font-size: 14px; color: #aaa; margin-right: 10px; }
+    .rep-tracker input { width: 70px; background: #333; border: 1px solid #444; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 16px; text-align: center; }
+
     /* Dairesel Sayaç */
-    .ring-container { position: relative; width: 160px; height: 160px; margin: 0 auto 25px auto; }
+    .ring-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto; }
     .progress-ring__circle { transition: stroke-dashoffset 1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
-    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; font-weight: bold; color: #fff; }
+    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 36px; font-weight: bold; color: #fff; }
 
-    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #000; border: none; padding: 16px 28px; font-size: 18px; font-weight: 800; border-radius: 14px; cursor: pointer; width: 100%; transition: transform 0.1s, opacity 0.2s; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3); }
+    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #000; border: none; padding: 16px 28px; font-size: 18px; font-weight: 800; border-radius: 12px; cursor: pointer; width: 100%; transition: transform 0.1s, opacity 0.2s; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25); }
     .btn:active { transform: scale(0.97); opacity: 0.9; }
-    .progress { margin-top: 20px; font-size: 14px; color: #777; font-weight: 500; }
+    .progress { margin-top: 15px; font-size: 13px; color: #666; font-weight: 500; }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>🔥 FULL BODY PRO</h1>
-  
-  <div class="media-container" id="media-container">
-    <video id="exercise-video" autoplay loop muted playsinline style="display:none;"></video>
-    <img id="exercise-img" src="" alt="Egzersiz" style="display:none;">
-  </div>
+  <h1>🔥 FULL BODY KOÇ</h1>
+  <div class="subtitle">1 Aylık Calisthenics Hipertrofi Programı</div>
 
   <div class="status" id="status-text">ANTRENMANA HAZIRLAN</div>
   <div class="set-badge" id="set-badge" style="display:none;"></div>
   
-  <div class="exercise-name" id="exercise-name">Vücut Ağırlığı Rutini</div>
-  <div class="detail" id="exercise-detail">Kas Gelişimi İçin Optimal Dinlenme</div>
+  <div class="exercise-name" id="exercise-name">Başlamaya Hazır Mısın?</div>
+
+  <div class="info-box" id="info-box" style="display:none;">
+    <div class="info-target" id="info-target">HEDEF KASLAR</div>
+    <div class="info-detail" id="info-detail">Açıklama</div>
+  </div>
+
+  <div class="rep-tracker" id="rep-tracker">
+    <label for="rep-input">Bu sette kaç tekrar yaptın?</label>
+    <input type="number" id="rep-input" placeholder="0" min="0">
+  </div>
 
   <div class="ring-container" id="ring-container">
-    <svg class="progress-ring" width="160" height="160">
-      <circle stroke="#2a2a2a" stroke-width="8" fill="transparent" r="70" cx="80" cy="80"/>
-      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80"/>
+    <svg class="progress-ring" width="150" height="150">
+      <circle stroke="#2a2a2a" stroke-width="8" fill="transparent" r="65" cx="75" cy="75"/>
+      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="65" cx="75" cy="75"/>
     </svg>
     <div class="timer-display" id="timer">00:00</div>
   </div>
 
-  <button class="btn" id="action-btn" onclick="nextStep()">BAŞLA</button>
+  <button class="btn" id="action-btn" onclick="nextStep()">ANTRENMANA BAŞLA</button>
   <div class="progress" id="progress-text">0 / 5 Egzersiz</div>
 </div>
 
 <script>
-  // Tam ve Bilimsel Full Body Antrenmanı (Calisthenics)
   const workout = [
     { 
       name: "1. Pike Push-Up", 
       type: "reps", 
       sets: 3, 
-      detail: "Omuz ve Üst Göğüs.\nHedef: 8-12 Tekrar.", 
+      target: "Omuzlar (Ön/Yan Deltoid) & Üst Göğüs",
+      detail: "Kalçayı yukarı kaldırarak 'V' şekli al. Başını ellerinin biraz önüne doğru yavaşça indir ve omuz gücünle kendini geriye it.", 
       setRest: 90, 
-      exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Pike_push_up.gif" 
+      exRest: 120 
     },
     { 
-      name: "2. Barfiks (veya Inverted Row)", 
+      name: "2. Barfiks veya Inverted Row", 
       type: "reps", 
       sets: 3, 
-      detail: "Sırt ve Biceps.\nHedef: Tükenişe Yakın.", 
+      target: "Sırt (Kanat Kasları), Arka Omuz & Biceps",
+      detail: "Barfiks barında veya sağlam bir masa/sopa altında göğsünü bara doğru çek. İnerken yavaş in, sırt kaslarının gerildiğini hisset.", 
       setRest: 90, 
-      exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Pullup.gif" 
+      exRest: 120 
     },
     { 
       name: "3. Standart Şınav", 
       type: "reps", 
       sets: 4, 
-      detail: "Göğüs ve Triceps.\nHedef: Formu bozmadan tükeniş.", 
+      target: "Göğüs, Ön Omuz & Triceps (Arka Kol)",
+      detail: "Vücut dümdüz bir tahta gibi olsun. Dirsekleri dışarı kırma, gövdeye 45 derece açıyla geriye bük. Göğsün yere yaklaşana kadar in.", 
       setRest: 90, 
-      exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Pushups.gif" 
+      exRest: 120 
     },
     { 
       name: "4. Bulgarian Split Squat", 
       type: "reps", 
       sets: 3, 
-      detail: "Ön Bacak ve Kalça.\nHedef: Her bacak için 10-15 Tekrar.", 
+      target: "Ön Bacak (Quadriceps), Kalça & Arka Bacak",
+      detail: "Bir ayağını arkadaki koltuğa koy. Öndeki bacağın üzerinde 90 derece bükülerek aşağı çök. Her bacak için ayrı ayrı uygula.", 
       setRest: 90, 
-      exRest: 120, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Bulgarian_Split_Squat.gif" 
+      exRest: 120 
     },
     { 
-      name: "5. Hollow Body (veya Plank)", 
+      name: "5. Hollow Body Hold (veya Plank)", 
       type: "time", 
       duration: 60, 
       sets: 3, 
-      detail: "Merkez Bölge (Core).\nHedef: 60 saniye boyunca kasılı kal.", 
+      target: "Tüm Karın Kasları & Core Bölgesi",
+      detail: "Sırtüstü yat, belini yere tamamen yapıştır. Kolları ve bacakları hafifçe kaldırarak muz şekli al ve karın kaslarını sıkarak bekle.", 
       setRest: 60, 
-      exRest: 0, 
-      media: "https://upload.wikimedia.org/wikipedia/commons/2/23/Plank_exercise.gif" 
+      exRest: 0 
     }
   ];
 
@@ -127,52 +138,39 @@
     ring.style.strokeDashoffset = offset;
   }
 
-  // Medyayı sorunsuz oynatmak için geliştirilmiş fonksiyon
-  function renderMedia(mediaUrl) {
-    const videoEl = document.getElementById("exercise-video");
-    const imgEl = document.getElementById("exercise-img");
-    
-    if (!mediaUrl) {
-      videoEl.style.display = "none";
-      imgEl.style.display = "none";
-      videoEl.pause();
-      return;
-    }
-
-    if (mediaUrl.endsWith(".mp4")) {
-      imgEl.style.display = "none";
-      videoEl.style.display = "block";
-      if (videoEl.src !== mediaUrl) {
-        videoEl.src = mediaUrl;
-        videoEl.play().catch(e => console.log("Otomatik oynatma bekliyor."));
-      }
-    } else {
-      videoEl.style.display = "none";
-      videoEl.pause();
-      imgEl.style.display = "block";
-      if (imgEl.src !== mediaUrl) {
-        imgEl.src = mediaUrl;
-      }
-    }
+  // Sesli Uyarı Sistemi (Bip Tonu)
+  function playBeep() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+    } catch(e){}
   }
 
   function updateUI() {
     const statusText = document.getElementById("status-text");
     const exName = document.getElementById("exercise-name");
-    const exDetail = document.getElementById("exercise-detail");
+    const infoBox = document.getElementById("info-box");
+    const infoTarget = document.getElementById("info-target");
+    const infoDetail = document.getElementById("info-detail");
     const timerDisplay = document.getElementById("timer");
     const btn = document.getElementById("action-btn");
     const progressText = document.getElementById("progress-text");
     const setBadge = document.getElementById("set-badge");
-    const mediaContainer = document.getElementById("media-container");
+    const repTracker = document.getElementById("rep-tracker");
 
     if (currentIndex === -1) {
       setBadge.style.display = "none";
-      mediaContainer.style.display = "none";
+      infoBox.style.display = "none";
+      repTracker.style.display = "none";
       statusText.innerText = "ANTRENMANA HAZIRLAN";
       statusText.style.color = "#888";
-      exName.innerText = "Vücut Ağırlığı Rutini";
-      exDetail.innerText = "Tüm kas gruplarını çalıştıran sistem.";
+      exName.innerText = "Full Body Hipertrofi";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
@@ -183,12 +181,11 @@
 
     if (currentIndex >= workout.length) {
       setBadge.style.display = "none";
-      mediaContainer.style.display = "none";
-      renderMedia(""); 
+      infoBox.style.display = "none";
+      repTracker.style.display = "none";
       statusText.innerText = "TEBRİKLER!";
       statusText.style.color = "#00f2fe";
-      exName.innerText = "Antrenman Bitti";
-      exDetail.innerText = "Kaslar uyarıldı, şimdi protein ve dinlenme vakti!";
+      exName.innerText = "Antrenman Tamamlandı";
       timerDisplay.innerText = "00:00";
       setRingProgress(100);
       ring.setAttribute("stroke", "#00f2fe");
@@ -200,42 +197,42 @@
     const current = workout[currentIndex];
     progressText.innerText = (currentIndex + 1) + " / " + workout.length + " Egzersiz";
     setBadge.style.display = "inline-block";
-    setBadge.innerText = currentSet + ". SET / " + current.sets;
+    setBadge.innerText = currentSet + ". SET / " + current.sets + " SET";
 
     if (isResting) {
-      mediaContainer.style.display = "none"; 
-      renderMedia(""); 
+      infoBox.style.display = "none";
+      repTracker.style.display = "none";
 
       if (currentSet >= current.sets) {
-        statusText.innerText = "HAREKETLER ARASI GEÇİŞ";
+        statusText.innerText = "HAREKETLER ARASI GEÇİŞ DİNLENMESİ";
         statusText.style.color = "#ff4757";
         ring.setAttribute("stroke", "#ff4757");
         let nextEx = workout[currentIndex + 1];
         exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Bitiş");
-        exDetail.innerText = "2 dakika dinlen. Nabzını düşür ve diğer kasa odaklan.";
       } else {
         statusText.innerText = "SET ARASI DİNLENME";
         statusText.style.color = "#ffa502";
         ring.setAttribute("stroke", "#ffa502");
         exName.innerText = current.name;
-        exDetail.innerText = "Kaslarındaki ATP depoları doluyor. Bekle. (90 sn)";
       }
       btn.innerText = "DİNLENMEYİ GEÇ";
     } else {
-      mediaContainer.style.display = "block";
-      renderMedia(current.media);
-      
+      infoBox.style.display = "block";
+      infoTarget.innerText = "🎯 HEDEF: " + current.target;
+      infoDetail.innerText = current.detail;
+
       statusText.innerText = "EGZERSİZ ZAMANI";
       statusText.style.color = "#2ed573";
       ring.setAttribute("stroke", "#2ed573");
       exName.innerText = current.name;
-      exDetail.innerText = current.detail;
 
       if (current.type === "reps") {
+        repTracker.style.display = "block";
         timerDisplay.innerText = "--:--";
         setRingProgress(100);
         btn.innerText = "SETİ TAMAMLADIM";
       } else {
+        repTracker.style.display = "none";
         if(!isTimeRunning) {
            formatTimeToDisplay(current.duration);
            setRingProgress(100);
@@ -260,6 +257,15 @@
     if (!isResting) {
       const current = workout[currentIndex];
       
+      // Kaydedilen tekrarları hafızaya al
+      if (current.type === "reps") {
+        const val = document.getElementById("rep-input").value;
+        if(val) {
+          localStorage.setItem(`ex_${currentIndex}_set_${currentSet}`, val);
+          document.getElementById("rep-input").value = "";
+        }
+      }
+
       if (current.type === "time" && !isTimeRunning) {
         isTimeRunning = true;
         document.getElementById("action-btn").innerText = "SÜREYİ GEÇ";
@@ -308,6 +314,7 @@
 
       if (secondsLeft <= 0) {
         clearInterval(timerInterval);
+        playBeep();
         nextStep();
       }
     }, 1000);
