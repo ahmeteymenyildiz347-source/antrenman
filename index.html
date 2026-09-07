@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antrenman Koçu</title>
+  <style>
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
+    .card { background: #1e1e1e; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    
+    /* Video Kutusu */
+    .media-container { width: 100%; height: 210px; margin-bottom: 15px; border-radius: 12px; overflow: hidden; display: none; background: #000; }
+    .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+
+    h1 { margin-top: 0; color: #4facfe; font-size: 22px; margin-bottom: 15px; }
+    .status { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold; color: #888; }
+    .set-badge { display: inline-block; background: rgba(0, 242, 254, 0.15); color: #00f2fe; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 15px; }
+    .exercise-name { font-size: 22px; font-weight: bold; margin-bottom: 8px; min-height: 28px; }
+    .detail { font-size: 15px; color: #aaa; margin-bottom: 15px; }
+    
+    .ring-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto; }
+    .progress-ring__circle { transition: stroke-dashoffset 1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
+    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 36px; font-weight: bold; color: #fff; }
+
+    .btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #121212; border: none; padding: 14px 28px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; transition: opacity 0.2s; }
+    .btn:active { opacity: 0.8; }
+    .progress { margin-top: 15px; font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>ANTRENMAN KOÇU</h1>
+  
+  <div class="media-container" id="media-container">
+    <img id="exercise-media" src="" alt="Egzersiz Gösterimi">
+  </div>
+
+  <div class="status" id="status-text">HAZIR</div>
+  <div class="set-badge" id="set-badge" style="display:none;"></div>
+  
+  <div class="exercise-name" id="exercise-name">Antrenmana Başla</div>
+  <div class="detail" id="exercise-detail">Odaklan ve Hacim Kazan</div>
+
+  <div class="ring-container" id="ring-container">
+    <svg class="progress-ring" width="150" height="150">
+      <circle stroke="#333" stroke-width="8" fill="transparent" r="65" cx="75" cy="75"/>
+      <circle id="ring-path" class="progress-ring__circle" stroke="#00f2fe" stroke-width="8" stroke-linecap="round" fill="transparent" r="65" cx="75" cy="75"/>
+    </svg>
+    <div class="timer-display" id="timer">00:00</div>
+  </div>
+
+  <button class="btn" id="action-btn" onclick="nextStep()">BAŞLA</button>
+  <div class="progress" id="progress-text">0 / 5 Egzersiz</div>
+</div>
+
+<script>
+  // Web sunucusunda engellenmeden doğrudan çalışan görsel/video CDN bağlantıları
+  const workout = [
+    { name: "1. Pike Push-Up", type: "reps", sets: 3, detail: "Hedef: 8-12 Tekrar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1ODJ2azkyNndwZHhhNmt6OWRneTRmNm4yNndpbmU0dnN4MHFnciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" },
+    { name: "2. Standart Şınav", type: "reps", sets: 4, detail: "Hedef: Tükenişe Kadar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZydW0wazlsZHowNXJ4bTBubWNodmFia3lhZXFqMHpxOGpnbjMzbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKx97lOshf8Wzja/giphy.gif" },
+    { name: "3. Prone Y-T-W", type: "reps", sets: 3, detail: "Hedef: Her Harf 10 Tekrar", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/3o7TKT0631G1D03C5q/giphy.gif" },
+    { name: "4. Tempolu Squat", type: "reps", sets: 4, detail: "Hedef: 15-20 Tekrar (3sn İniş)", setRest: 90, exRest: 120, media: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2RveDdrNWsxeXZ0OHFucWhxcWswb3N4YmsyaHR4MnlsZXpkaXZ1eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT8qB32z7qK4VzRj4A/giphy.gif" },
+    { name: "5. Plank", type: "time", duration: 60, sets: 3, detail: "Hedef: 60 Saniye Statik", setRest: 60, exRest: 0, media: "https://media.giphy.com/media/3o7TKRnoP3f4fOxd3G/giphy.gif" }
+  ];
+
+  let currentIndex = -1;
+  let currentSet = 1;
+  let isResting = false;
+  let isTimeRunning = false;
+  let timerInterval = null;
+  let secondsLeft = 0;
+  let totalSeconds = 0;
+
+  const ring = document.getElementById('ring-path');
+  const radius = ring.r.baseVal.value;
+  const circumference = radius * 2 * Math.PI;
+  ring.style.strokeDasharray = `${circumference} ${circumference}`;
+  ring.style.strokeDashoffset = circumference;
+
+  function setRingProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    ring.style.strokeDashoffset = offset;
+  }
+
+  function updateUI() {
+    const statusText = document.getElementById("status-text");
+    const exName = document.getElementById("exercise-name");
+    const exDetail = document.getElementById("exercise-detail");
+    const timerDisplay = document.getElementById("timer");
+    const btn = document.getElementById("action-btn");
+    const progressText = document.getElementById("progress-text");
+    const setBadge = document.getElementById("set-badge");
+    const mediaContainer = document.getElementById("media-container");
+    const exerciseMedia = document.getElementById("exercise-media");
+
+    if (currentIndex === -1) {
+      setBadge.style.display = "none";
+      mediaContainer.style.display = "none";
+      statusText.innerText = "HAZIR";
+      statusText.style.color = "#888";
+      exName.innerText = "Tüm Vücut Hacim";
+      exDetail.innerText = "Büyüme Odaklı Sistem";
+      timerDisplay.innerText = "00:00";
+      setRingProgress(100);
+      ring.setAttribute("stroke", "#00f2fe");
+      btn.innerText = "ANTRENMANA BAŞLA";
+      progressText.innerText = "0 / " + workout.length + " Egzersiz";
+      return;
+    }
+
+    if (currentIndex >= workout.length) {
+      setBadge.style.display = "none";
+      mediaContainer.style.display = "none";
+      statusText.innerText = "TEBRİKLER!";
+      statusText.style.color = "#00f2fe";
+      exName.innerText = "Antrenman Bitti";
+      exDetail.innerText = "Şimdi beslenme zamanı!";
+      timerDisplay.innerText = "00:00";
+      setRingProgress(100);
+      ring.setAttribute("stroke", "#00f2fe");
+      btn.innerText = "YENİDEN BAŞLAT";
+      progressText.innerText = workout.length + " / " + workout.length + " Egzersiz";
+      return;
+    }
+
+    const current = workout[currentIndex];
+    progressText.innerText = (currentIndex + 1) + " / " + workout.length + " Egzersiz";
+    setBadge.style.display = "inline-block";
+    setBadge.innerText = currentSet + ". SET / " + current.sets;
+
+    if (isResting) {
+      mediaContainer.style.display = "none"; 
+      if (currentSet >= current.sets) {
+        statusText.innerText = "HAREKETLER ARASI GEÇİŞ";
+        statusText.style.color = "#ff4757";
+        ring.setAttribute("stroke", "#ff4757");
+        let nextEx = workout[currentIndex + 1];
+        exName.innerText = "Sıradaki: " + (nextEx ? nextEx.name : "Bitiş");
+        exDetail.innerText = "Kaslarını gevşet, 2 dakika dinlen.";
+      } else {
+        statusText.innerText = "SET ARASI DİNLENME";
+        statusText.style.color = "#ffa502";
+        ring.setAttribute("stroke", "#ffa502");
+        exName.innerText = current.name;
+        exDetail.innerText = (currentSet + 1) + ". Set için nefeslen (90s).";
+      }
+      btn.innerText = "DİNLENMEYİ GEÇ";
+    } else {
+      mediaContainer.style.display = "block";
+      
+      if (exerciseMedia.src !== current.media) {
+        exerciseMedia.src = current.media;
+      }
+      
+      statusText.innerText = "EGZERSİZ ZAMANI";
+      statusText.style.color = "#2ed573";
+      ring.setAttribute("stroke", "#2ed573");
+      exName.innerText = current.name;
+      exDetail.innerText = current.detail;
+
+      if (current.type === "reps") {
+        timerDisplay.innerText = "--:--";
+        setRingProgress(100);
+        btn.innerText = "SETİ TAMAMLADIM";
+      } else {
+        if(!isTimeRunning) {
+           formatTimeToDisplay(current.duration);
+           setRingProgress(100);
+           btn.innerText = "SÜREYİ BAŞLAT";
+        }
+      }
+    }
+  }
+
+  function nextStep() {
+    clearInterval(timerInterval);
+
+    if (currentIndex === -1 || currentIndex >= workout.length) {
+      currentIndex = 0;
+      currentSet = 1;
+      isResting = false;
+      isTimeRunning = false;
+      updateUI();
+      return;
+    }
+
+    if (!isResting) {
+      const current = workout[currentIndex];
+      
+      if (current.type === "time" && !isTimeRunning) {
+        isTimeRunning = true;
+        document.getElementById("action-btn").innerText = "SÜREYİ GEÇ";
+        startTimer(current.duration);
+        return;
+      }
+
+      isTimeRunning = false;
+      isResting = true;
+      
+      if (currentIndex === workout.length - 1 && currentSet >= current.sets) {
+        currentIndex++;
+        isResting = false;
+        updateUI();
+        return;
+      }
+
+      let restTime = (currentSet >= current.sets) ? current.exRest : current.setRest;
+      updateUI();
+      startTimer(restTime);
+    } else {
+      isResting = false;
+      if (currentSet >= workout[currentIndex].sets) {
+        currentSet = 1;
+        currentIndex++;
+      } else {
+        currentSet++;
+      }
+      updateUI();
+    }
+  }
+
+  function startTimer(seconds) {
+    clearInterval(timerInterval);
+    totalSeconds = seconds;
+    secondsLeft = seconds;
+    formatTimeToDisplay(secondsLeft);
+    setRingProgress(100);
+
+    timerInterval = setInterval(() => {
+      secondsLeft--;
+      formatTimeToDisplay(secondsLeft);
+      
+      let percent = (secondsLeft / totalSeconds) * 100;
+      setRingProgress(percent);
+
+      if (secondsLeft <= 0) {
+        clearInterval(timerInterval);
+        nextStep();
+      }
+    }, 1000);
+  }
+
+  function formatTimeToDisplay(sec) {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    document.getElementById("timer").innerText = `${m}:${s}`;
+  }
+
+  updateUI();
+</script>
+
+</body>
+</html>
+
